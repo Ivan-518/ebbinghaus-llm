@@ -2,8 +2,8 @@
 <div align="center">
   <img src="assets/banner.jpg" alt="Simulate Ebbinghaus Forgetting Curve Banner" width="100%">
 </div>
-> **基于艾宾浩斯遗忘曲线的 LLM 动态记忆管理系统**
->
+> **基于艾宾浩斯遗忘曲线的 LLM 动态记忆管理系统**>
+
 > *给 AI 装上“类人海马体”：让记忆像人类一样自然衰减与重塑。*
 
 
