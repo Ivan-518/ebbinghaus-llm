@@ -2,13 +2,13 @@
 
 > **基于艾宾浩斯遗忘曲线的 LLM 动态记忆管理系统**
 >
-> *给 AI 装上“类人海马体”：实现低 Token 消耗与高上下文关联的平衡。*
+> *给 AI 装上“类人海马体”：以极低的 Token 成本实现无限长的连贯对话。*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/Language-Python-blue.svg)](https://www.python.org/)
 [![Status: Concept](https://img.shields.io/badge/Status-Concept%20%26%20Prototype-orange)](https://github.com/)
 
-## 📖 项目背景 (Background)
+## 项目背景 (Background)
 
 在使用大语言模型（LLM）进行**长程任务**（如编写复杂项目代码、撰写长篇小说、TRPG 跑团）时，开发者和用户普遍面临三大痛点：
 
@@ -18,22 +18,22 @@
 
 本项目提出了一种基于**认知心理学**的解决方案：模仿人类大脑的 **艾宾浩斯遗忘曲线 (Ebbinghaus Forgetting Curve)**，构建一个具有**生命周期**的动态记忆管理系统。
 
-## 💡 核心理念 (Core Concept)
+## 核心理念 (Core Concept)
 
 人类的记忆不是线性的（FIFO），而是基于**权重**和**复习**的。我们不仅要让 AI “记住”，更要教会 AI 合理地“遗忘”。
 
 本系统将记忆分为两层架构：
 
-* 🧠 **工作记忆 (Working Memory)**：
+* **工作记忆 (Working Memory)**：
     * 保存在轻量级的 `context.md` 文件中。
     * 直接作为 Context 发送给 LLM。
     * **特点**：活跃、高权重、随时可用。
-* 🗄️ **潜意识归档 (Long-term Archive)**：
+* **潜意识归档 (Long-term Archive)**：
     * 保存在 JSONL 或 向量数据库中。
     * 不消耗 Token，处于“沉睡”状态。
     * **特点**：只有当被某种契机（关键词/语义）触发时，才会被“唤醒”并提取回工作记忆。
 
-## ⚙️ 算法逻辑 (The Algorithm)
+## 算法逻辑 (The Algorithm)
 
 系统摒弃了死板的滑动窗口，而是为每一条记忆（Memory Item）计算一个**动态留存分数 (Retention Score)**。
 
@@ -48,23 +48,23 @@ $$Score = (I \times F) - (T \times R)$$
 1.  **遗忘**：当 `Score` 低于阈值，信息从 `context.md` 移入归档区。
 2.  **唤醒**：当新 Prompt 触发语义搜索并命中归档区条目时，该条目移回 `context.md`，并重置衰减时间。
 
-## 🎯 适用场景 (Use Cases)
+## 适用场景 (Use Cases)
 
 本系统设计为通用的记忆中间件，不仅限于编程：
 
-* **💻 AI 辅助编程 (AI Coding)**
+* **AI 辅助编程 (AI Coding)**
     * 记住项目架构、核心函数定义、API 规范。
     * 遗忘临时的调试信息、已修复的 Bug 细节。
-* **📚 网文/小说创作 (Novel Writing)**
+* **网文/小说创作 (Novel Writing)**
     * 记住主角性格、世界观设定、埋下的伏笔。
     * 遗忘过场剧情、路人甲的琐碎对话。
-* **🎲 TRPG/跑团助手 (Game Master)**
+* **TRPG/跑团助手 (Game Master)**
     * 记住主线任务、玩家背包中的关键道具（哪怕是100轮前获得的）。
     * 遗忘早已探索过的普通房间描述。
-* **🎓 个人学习伴侣 (Personal Learning)**
+* **个人学习伴侣 (Personal Learning)**
     * 根据用户的遗忘曲线，反向提取快被遗忘的知识点进行“考查”和复习。
 
-## 🛠️ 系统架构 (Architecture)
+## 系统架构 (Architecture)
 
 坚持 **K.I.S.S (Keep It Simple, Stupid)** 原则，核心载体仅为 Markdown 文件，方便开发者透明化管理和 Debug。
 
