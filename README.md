@@ -50,22 +50,3 @@
 * 当 `Score > 阈值`：保留在工作记忆（Context）。
 * 当 `Score < 阈值`：移入长期归档（Archive）。
 
-## 系统架构 (Architecture)
-
-```mermaid
-graph TD
-    Input[用户交互 / 项目事件] --> Summarizer(LLM 自动总结 & 初始打分 I)
-    Summarizer --> MemoryPool{存入记忆池}
-    
-    subgraph 艾宾浩斯循环 (Ebbinghaus Cycle)
-    MemoryPool --> TimeDecay[时间流逝 T]
-    TimeDecay --> Calc[计算分数: Score = I*F - T*R]
-    Calc --> Check{分数 > 阈值?}
-    Check -- No --> Archive[沉睡/归档]
-    Check -- Yes --> Context[活跃/工作记忆 context.md]
-    
-    Context -.-> NewTask[用户新请求]
-    NewTask -- 语义命中 --> Recall[唤醒 Recall]
-    Recall --> Update[复习次数 F+1, 时间 T重置]
-    Update --> Calc
-    end
